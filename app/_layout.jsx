@@ -2,10 +2,12 @@ import { Stack, useRouter, useSegments } from 'expo-router';
 import '../global.css';
 import { useEffect } from 'react';
 import AuthProvider from '../contexts/authContext';
-import useAuth from '../hooks/useAuth'
+import useAuth from '../hooks/useAuth';
+import Toast from 'react-native-toast-message';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const RouteGuard = ({ children }) => {
-  const {user, loading} = useAuth();
+  const { user, loading } = useAuth();
   const router = useRouter();
   // const [isAuth] = useState(false);
   // const [isMounted, setIsMounted] = useState(false);
@@ -21,9 +23,8 @@ const RouteGuard = ({ children }) => {
 
     if (!user && !isAuthGroup && !loading) {
       router.replace('/auth');
-    } 
-    else if(user && isAuthGroup && !loading) {
-      router.replace('/')
+    } else if (user && isAuthGroup && !loading) {
+      router.replace('/');
     }
   }, [router, segment, loading, user]);
 
@@ -32,12 +33,15 @@ const RouteGuard = ({ children }) => {
 
 export default function RootLayout() {
   return (
-    <AuthProvider>
-      <RouteGuard>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack>
-    </RouteGuard>
-    </AuthProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <AuthProvider>
+        <RouteGuard>
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          </Stack>
+          <Toast />
+        </RouteGuard>
+      </AuthProvider>
+    </GestureHandlerRootView>
   );
 }

@@ -19,7 +19,7 @@ const AuthProvider = ({ children }) => {
       await signIn(email, password);
     } catch (error) {
       console.error('SignUp error:', error);
-      throw error; // Re-throw to handle in UI
+      throw error; 
     }
   };
 
