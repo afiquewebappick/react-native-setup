@@ -16,7 +16,7 @@ export default function TabsLayout() {
         },
         tabBarLabelStyle: {
           fontWeight: 'bold',
-          fontSize: 14,
+          fontSize: 12,
         },
       }}
     >
@@ -40,7 +40,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="streaks"
         options={{
-          title: "Streaks",
+          title: 'Streaks',
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <FontAwesome5 name="chart-line" size={size} color={color} />
@@ -50,7 +50,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="addHabit"
         options={{
-          title: "Add Habit",
+          title: 'Add Habit',
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="plus-circle" size={size} color={color} />

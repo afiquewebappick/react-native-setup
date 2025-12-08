@@ -25,6 +25,7 @@ const AddHabitScreen = () => {
   const [frequency, setFrequency] = useState('daily');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [loading, setLoading] = useState(false);
   const { user } = useAuth();
 
   // console.log(frequency)
@@ -33,6 +34,7 @@ const AddHabitScreen = () => {
     if (!user) return;
 
     try {
+      setLoading(true);
       const data = {
         user_id: user.$id,
         title,
@@ -66,6 +68,8 @@ const AddHabitScreen = () => {
     } catch (error) {
       // console.error('Error creating habit:', error);
       throw error;
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -136,7 +140,7 @@ const AddHabitScreen = () => {
                 }`}
               >
                 <Text className="text-center text-lg text-white font-semibold">
-                  Add Habit
+                  {loading ? 'Adding..' : 'Add Habit'}
                 </Text>
               </Pressable>
             </View>

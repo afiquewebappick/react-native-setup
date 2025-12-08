@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Swipeable } from 'react-native-gesture-handler';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -10,10 +10,12 @@ import {
 } from '@/lib/appwrite';
 import useAuth from '@/hooks/useAuth';
 import { ID, Query } from 'react-native-appwrite';
+import { useRouter } from 'expo-router';
 
 const HabitCard = ({ habit, handleDelete, handleUpdate }) => {
   const { user } = useAuth();
   const [isCompleted, setIsCompleted] = useState(false);
+  const router = useRouter();
   const swipeableRefs = useRef({});
   const options = {
     year: 'numeric',
@@ -196,6 +198,23 @@ const HabitCard = ({ habit, handleDelete, handleUpdate }) => {
             <Text className="text-green-700 font-medium">
               🔥 {habit.streak_count} day streak
             </Text>
+
+            <Pressable
+              onPress={() =>
+                router.push({
+                  pathname: '/updateHabit',
+                  params: {
+                    id: habit.$id,
+                    title: habit.title,
+                    description: habit.description,
+                    frequency: habit.frequency,
+                  },
+                })
+              }
+              className="px-3 py-1 bg-yellow-400 rounded-lg"
+            >
+              <Text className="text-white font-semibold">Update</Text>
+            </Pressable>
           </View>
         </View>
       </View>

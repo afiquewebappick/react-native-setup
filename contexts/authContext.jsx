@@ -19,7 +19,7 @@ const AuthProvider = ({ children }) => {
       await signIn(email, password);
     } catch (error) {
       console.error('SignUp error:', error);
-      throw error; 
+      throw error;
     }
   };
 
@@ -41,7 +41,7 @@ const AuthProvider = ({ children }) => {
   const signOut = async () => {
     try {
       await account.deleteSession({
-        sessionId: 'current'
+        sessionId: 'current',
       });
       setUser(null);
     } catch (error) {
@@ -57,13 +57,13 @@ const AuthProvider = ({ children }) => {
         setUser(currentUser);
       } catch (error) {
         // User not logged in
-        console.log(error)
+        console.log(error);
         setUser(null);
       } finally {
         setLoading(false);
       }
     };
-    
+
     checkUser();
   }, []);
 
@@ -74,11 +74,9 @@ const AuthProvider = ({ children }) => {
     signIn,
     signOut,
   };
-  
+
   return (
-    <AuthContext.Provider value={authInfo}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );
 };
 
