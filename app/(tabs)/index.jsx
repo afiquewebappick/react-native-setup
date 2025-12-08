@@ -12,6 +12,7 @@ import { useFocusEffect } from '@react-navigation/native';
 const Home = () => {
   const { signOut, user } = useAuth();
   const [habits, setHabits] = useState([]);
+  // const [isCompleted, setIsCompleted] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -37,6 +38,12 @@ const Home = () => {
     setHabits(habits.filter((h) => h.$id !== habitId));
   };
 
+  const handleUpdate = (updatedHabit) => {
+    setHabits((prev) =>
+      prev.map((h) => (h.$id === updatedHabit.$id ? updatedHabit : h))
+    );
+  };
+
   return (
     <SafeAreaView>
       <ScrollView showsVerticalScrollIndicator={false} className="p-4">
@@ -58,7 +65,12 @@ const Home = () => {
           </View>
         ) : (
           habits.map((habit, i) => (
-            <HabitCard key={i} habit={habit} handleDelete={handleDelete}></HabitCard>
+            <HabitCard
+              key={i}
+              habit={habit}
+              handleDelete={handleDelete}
+              handleUpdate={handleUpdate}
+            ></HabitCard>
           ))
         )}
 
