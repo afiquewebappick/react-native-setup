@@ -1,6 +1,12 @@
 import useAuth from '@/hooks/useAuth';
 // import { Link } from 'expo-router';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+  RefreshControl,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Entypo from '@expo/vector-icons/Entypo';
 import { useCallback, useState } from 'react';
@@ -12,27 +18,33 @@ import { useFocusEffect } from '@react-navigation/native';
 const Home = () => {
   const { signOut, user } = useAuth();
   const [habits, setHabits] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
   // const [isCompleted, setIsCompleted] = useState(false);
+
+  const fetchHabits = useCallback(async () => {
+    try {
+      const res = await databases.listDocuments(
+        DATABASE_ID,
+        HABITS_COLLECTION_ID,
+        [Query.equal('user_id', user?.$id ?? '')]
+      );
+      setHabits(res.documents);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [user]);
 
   useFocusEffect(
     useCallback(() => {
-      const fetchHabits = async () => {
-        try {
-          const res = await databases.listDocuments(
-            DATABASE_ID,
-            HABITS_COLLECTION_ID,
-            [Query.equal('user_id', user?.$id ?? '')]
-          );
-          // console.log(res.documents);
-          setHabits(res.documents);
-        } catch (error) {
-          console.error(error);
-        }
-      };
-
       fetchHabits();
-    }, [user])
+    }, [fetchHabits])
   );
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await fetchHabits();
+    setRefreshing(false);
+  }, [fetchHabits]);
 
   const handleDelete = (habitId) => {
     setHabits(habits.filter((h) => h.$id !== habitId));
@@ -45,8 +57,19 @@ const Home = () => {
   };
 
   return (
-    <SafeAreaView>
-      <ScrollView showsVerticalScrollIndicator={false} className="p-4">
+    <SafeAreaView className="bg-white flex-1">
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        className="p-4"
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            colors={['#6200ee']} // Android
+            tintColor="#6200ee" // iOS
+          />
+        }
+      >
         <View className="flex-row justify-between items-center mt-2">
           <Text className="text-3xl font-bold">Today&apos; Habit</Text>
 
@@ -89,10 +112,10 @@ const Home = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  text: {
-    color: 'green',
-  },
-});
+// const styles = StyleSheet.create({
+//   text: {
+//     color: 'green',
+//   },
+// });
 
 export default Home;

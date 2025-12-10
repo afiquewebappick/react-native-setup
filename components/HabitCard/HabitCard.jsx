@@ -1,5 +1,5 @@
 import { View, Text, Pressable } from 'react-native';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Swipeable } from 'react-native-gesture-handler';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import {
@@ -175,7 +175,7 @@ const HabitCard = ({ habit, handleDelete, handleUpdate }) => {
     >
       <View className="mt-6">
         <View
-          className={`bg-white shadow-lg rounded-2xl p-5 border border-gray-100 ${isCompleted ? 'opacity-60' : 'opacity-100'}`}
+          className={`bg-white shadow-lg rounded-2xl p-5 border border-gray-100 ${isCompleted ? 'opacity-50' : 'opacity-100'}`}
         >
           <View className="flex-row justify-between items-center mb-2">
             <Text className="text-gray-500 text-sm">

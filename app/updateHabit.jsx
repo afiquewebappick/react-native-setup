@@ -105,7 +105,7 @@ const UpdateHabitScreen = () => {
         {/* Submit Button */}
         <Pressable
           onPress={handleUpdateHabit}
-          className="bg-[#4a3aff] py-4 rounded-2xl shadow-md mt-4"
+          className="bg-[#4a3aff] py-4 rounded-2xl shadow-md mt-4 active:opacity-50"
         >
           <Text className="text-center text-white font-semibold text-lg">
             {loading ? 'Updating...' : 'Save Changes'}

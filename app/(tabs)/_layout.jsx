@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+// import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
@@ -38,16 +38,6 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="streaks"
-        options={{
-          title: 'Streaks',
-          headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="chart-line" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="addHabit"
         options={{
           title: 'Add Habit',
@@ -57,6 +47,16 @@ export default function TabsLayout() {
           ),
         }}
       />
+       {/* <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5 name="chart-line" size={size} color={color} />
+          ),
+        }}
+      /> */}
     </Tabs>
   );
 }

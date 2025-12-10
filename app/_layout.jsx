@@ -5,6 +5,7 @@ import AuthProvider from '../contexts/authContext';
 import useAuth from '../hooks/useAuth';
 import Toast from 'react-native-toast-message';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+// import { useColorScheme } from 'react-native';
 
 const RouteGuard = ({ children }) => {
   const { user, loading } = useAuth();
@@ -32,6 +33,10 @@ const RouteGuard = ({ children }) => {
 };
 
 export default function RootLayout() {
+  // const colorScheme = useColorScheme();
+  // console.log(colorScheme);
+  // colorScheme = 'dark';
+  // console.log(colorScheme);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <AuthProvider>
