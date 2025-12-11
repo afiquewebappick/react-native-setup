@@ -1,23 +1,25 @@
 import { Tabs } from 'expo-router';
-// import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#6200ee', // blue-600
-        tabBarInactiveTintColor: '#666666', // gray-500
+        tabBarActiveTintColor: '#6200ee',
+        tabBarInactiveTintColor: '#666666',
         tabBarStyle: {
           borderTopWidth: 0,
           paddingTop: 10,
+          paddingLeft: 10,
+          paddingEnd: 10,
           shadowOpacity: 0,
           backgroundColor: '#f5f5f5',
         },
         tabBarLabelStyle: {
           fontWeight: 'bold',
-          fontSize: 12,
+          fontSize: 10,
         },
       }}
     >
@@ -26,13 +28,6 @@ export default function TabsLayout() {
         options={{
           title: "Today's Habit",
           headerShown: false,
-          // tabBarIcon: ({ color, focused }) => {
-          //   return focused ? (
-          //     <FontAwesome name="home" size={24} color={color} />
-          //   ) : (
-          //     <Ionicons name="home-outline" size={24} color="black" />
-          //   );
-          // },
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="calculator" size={size} color={color} />
           ),
@@ -58,16 +53,16 @@ export default function TabsLayout() {
           ),
         }}
       />
-       {/* <Tabs.Screen
+      <Tabs.Screen
         name="profile"
         options={{
           title: 'Profile',
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="chart-line" size={size} color={color} />
+            <Ionicons name="person-outline" size={size} color={color} />
           ),
         }}
-      /> */}
+      />
     </Tabs>
   );
 }

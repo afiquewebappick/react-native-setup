@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Entypo from '@expo/vector-icons/Entypo';
+// import Entypo from '@expo/vector-icons/Entypo';
 import { useCallback, useState } from 'react';
 import { databases, DATABASE_ID, HABITS_COLLECTION_ID } from '@/lib/appwrite';
 import { Query } from 'react-native-appwrite';
@@ -84,20 +84,18 @@ const Home = () => {
             className="flex-row gap-x-2 items-center"
             onPress={signOut}
           >
-            <Entypo name="log-out" size={18} color="#6200ee" />
-            <Text className="text-[#6200ee] text-xl">Sign Out</Text>
+            {/* <Entypo name="log-out" size={18} color="#6200ee" /> */}
+            {/* <Text className="text-[#6200ee] text-xl">Sign Out</Text> */}
           </Pressable>
         </View>
 
         {loading && habits.length === 0 && (
-          <View
-            className='mt-20 text-center'
-          >
+          <View className="mt-20 text-center">
             <ActivityIndicator size="large" color="black" />
           </View>
         )}
 
-        {(!loading && habits.length === 0) ? (
+        {!loading && habits.length === 0 ? (
           <View className="mt-20 p-10 bg-gray-400">
             <Text className="text-center text-xl">No habits added yet </Text>
           </View>
