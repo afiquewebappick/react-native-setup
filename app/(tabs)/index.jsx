@@ -6,6 +6,7 @@ import {
   Text,
   View,
   RefreshControl,
+  ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Entypo from '@expo/vector-icons/Entypo';
@@ -19,10 +20,12 @@ const Home = () => {
   const { signOut, user } = useAuth();
   const [habits, setHabits] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+  const [loading, setLoading] = useState(false);
   // const [isCompleted, setIsCompleted] = useState(false);
 
   const fetchHabits = useCallback(async () => {
     try {
+      setLoading(true);
       const res = await databases.listDocuments(
         DATABASE_ID,
         HABITS_COLLECTION_ID,
@@ -30,7 +33,9 @@ const Home = () => {
       );
       setHabits(res.documents);
     } catch (error) {
-      console.error(error);
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
   }, [user]);
 
@@ -41,9 +46,11 @@ const Home = () => {
   );
 
   const onRefresh = useCallback(async () => {
+    setLoading(true);
     setRefreshing(true);
     await fetchHabits();
     setRefreshing(false);
+    setLoading(false);
   }, [fetchHabits]);
 
   const handleDelete = (habitId) => {
@@ -82,9 +89,17 @@ const Home = () => {
           </Pressable>
         </View>
 
-        {habits.length === 0 ? (
+        {loading && habits.length === 0 && (
+          <View
+            className='mt-20 text-center'
+          >
+            <ActivityIndicator size="large" color="black" />
+          </View>
+        )}
+
+        {(!loading && habits.length === 0) ? (
           <View className="mt-20 p-10 bg-gray-400">
-            <Text className="text-center text-xl">No habits added yet</Text>
+            <Text className="text-center text-xl">No habits added yet </Text>
           </View>
         ) : (
           habits.map((habit, i) => (

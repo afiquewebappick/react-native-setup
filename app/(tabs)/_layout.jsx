@@ -11,6 +11,7 @@ export default function TabsLayout() {
         tabBarInactiveTintColor: '#666666', // gray-500
         tabBarStyle: {
           borderTopWidth: 0,
+          paddingTop: 10,
           shadowOpacity: 0,
           backgroundColor: '#f5f5f5',
         },
@@ -44,6 +45,16 @@ export default function TabsLayout() {
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="plus-circle" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="streaks"
+        options={{
+          title: 'Streaks',
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <AntDesign name="line-chart" size={size} color={color} />
           ),
         }}
       />

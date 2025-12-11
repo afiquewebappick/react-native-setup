@@ -5,6 +5,7 @@ import AuthProvider from '../contexts/authContext';
 import useAuth from '../hooks/useAuth';
 import Toast from 'react-native-toast-message';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+// import { ActivityIndicator, View } from 'react-native';
 // import { useColorScheme } from 'react-native';
 
 const RouteGuard = ({ children }) => {
@@ -21,6 +22,16 @@ const RouteGuard = ({ children }) => {
   useEffect(() => {
     // if (!isMounted) return;
     const isAuthGroup = segment[0] === '/auth';
+
+    // if (loading) {
+    //   return (
+    //     <View
+    //       style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+    //     >
+    //       <ActivityIndicator size="large" color="black" />
+    //     </View>
+    //   );
+    // }
 
     if (!user && !isAuthGroup && !loading) {
       router.replace('/auth');

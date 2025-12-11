@@ -8,10 +8,11 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const signUp = async (email, password) => {
+  const signUp = async (name, email, password) => {
     try {
       await account.create({
         userId: ID.unique(),
+        name: name,
         email: email,
         password: password,
       });

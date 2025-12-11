@@ -6,15 +6,19 @@ import {
   TextInput,
   Text,
   Pressable,
+  Image,
+  ScrollView,
 } from 'react-native';
 import Entypo from '@expo/vector-icons/Entypo';
 import useAuth from '../../hooks/useAuth';
 import { Stack, useRouter } from 'expo-router';
+import habitImg from '../../assets/habitImg.jpg';
 
 const AuthScreen = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [hidePass, SetHidePass] = useState(true);
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { signUp, signIn } = useAuth();
@@ -34,6 +38,11 @@ const AuthScreen = () => {
       return;
     }
 
+    if (isSignUp && !name) {
+      setError('Please fill all field');
+      return;
+    }
+
     if (password.length < 8) {
       setError('Password must be 8 characters long');
       return;
@@ -42,7 +51,7 @@ const AuthScreen = () => {
     setError('');
 
     if (isSignUp) {
-      await signUp(email, password);
+      await signUp(name, email, password);
       router.replace('/');
     } else {
       try {
@@ -56,7 +65,7 @@ const AuthScreen = () => {
   };
 
   return (
-    <>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <Stack.Screen
         options={{
           title: isSignUp ? 'Sign Up' : 'Sign In',
@@ -69,9 +78,28 @@ const AuthScreen = () => {
         className="flex-1 bg-[#f5f5f5]"
       >
         <View className="flex-1 p-4 justify-center gap-y-3">
+          <View className="flex justify-center items-center">
+            <Image
+              className="object-cover w-full h-[250px] rounded-md"
+              source={habitImg}
+            />
+          </View>
+
           <Text className="text-center text-4xl font-bold mb-4 text-blue-800">
-            {isSignUp ? 'Create Account' : 'Welcome Back'}
+            {isSignUp
+              ? 'Create Account to Get Started'
+              : 'Welcome Back to Habit Tracker'}
           </Text>
+
+          {isSignUp && (
+            <TextInput
+              autoCapitalize="none"
+              inputMode="text"
+              onChangeText={setName}
+              placeholder="Your Name"
+              className="p-4 border border-blue-400 rounded-lg bg-white"
+            />
+          )}
 
           <TextInput
             autoCapitalize="none"
@@ -122,7 +150,7 @@ const AuthScreen = () => {
           </Pressable>
         </View>
       </KeyboardAvoidingView>
-    </>
+    </ScrollView>
   );
 };
 
